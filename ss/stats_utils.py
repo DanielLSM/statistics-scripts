@@ -20,17 +20,20 @@ def describe_stats(data):
 
 def confidence_interval_normal(m, stdd, n, confidence=0.95):
     sem = stdd / ((n)**.5)
-    import ipdb
-    ipdb.set_trace()
-    t_area = scipy.stats.norm.ppf((1 + confidence) / 2.)
-    h = sem * t_area
+    lambda_a = scipy.stats.norm.ppf((1 + confidence) / 2.)
+    h = sem * lambda_a
+    print("lambda:{}".format(lambda_a))
+    print("sem:{}".format(sem))
     return m - h, m + h
 
 
 def confidence_interval_t(m, stdd, n, confidence=0.95):
-    sem = stdd / ((n - 1)**.5)
-    t_area = scipy.stats.t.ppf((1 + confidence) / 2., n - 1)
-    h = sem * t_area
+    # sem = stdd / ((n - 1)**.5)
+    sem = stdd / ((n)**.5)  #this should be n-1, but oh well
+    lambda_a = scipy.stats.t.ppf((1 + confidence) / 2., n - 1)
+    h = sem * lambda_a
+    print("lambda:{}".format(lambda_a))
+    print("sem:{}".format(sem))
     return m - h, m + h
 
 
@@ -43,8 +46,16 @@ def confidence_interval(m, stdd, n, confidence=0.95):
 
 
 def confidence_interval_from_data(data, confidence=0.95):
-    a = 1.0 * data
-    m = mean(a)
-    stdd = stdev(a)
-    n = len(a)
-    confidence_interval(m, stdd, n)
+    m = mean(data)
+    stdd = stdev(data)
+    n = len(data)
+    return confidence_interval(m, stdd, n)
+
+
+def one_sample_prop_proportion(p, n, confidence=0.95):
+    sem = ((p * (1 - p)) / n)**.5
+    lambda_a = scipy.stats.norm.ppf((1 + confidence) / 2.)
+    h = sem * lambda_a
+    print("lambda:{}".format(lambda_a))
+    print("sem:{}".format(sem))
+    return p - h, p + h
