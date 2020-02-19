@@ -1,4 +1,5 @@
 import scipy
+import math
 from scipy import stats
 from statistics import NormalDist, mean, stdev
 
@@ -59,3 +60,25 @@ def one_sample_prop_proportion(p, n, confidence=0.95):
     print("lambda:{}".format(lambda_a))
     print("sem:{}".format(sem))
     return p - h, p + h
+
+
+def two_sample_proportion(p_1, n_1, p_2, n_2, confidence=0.95):
+    diff_p = p_1 - p_2
+    sem_weighted = math.sqrt(((p_1 * (1 - p_1)) / n_1 + ((p_2 * (1 - p_2)) / n_2)))
+    lambda_a = scipy.stats.norm.ppf((1 + confidence) / 2.)
+    h = sem * lambda_a
+    print("lambda:{}".format(lambda_a))
+    print("weighted sem:{}".format(sem_weighted))
+    return -h, h
+
+
+def two_sample_population(m_1, stdd_1, n_1, m_2, stdd_2, n_2, confidence=0.95):
+    diff_m = m_1 - m_2
+    if n_1 <= 30 or n_2 <= 30:
+        s_p_squared = ((n_1 - 1) * stdd_1**2 + (n_2 - 1) * stdd_2**2) / (n_1 + n_2 - 2)
+        lambda_a = scipy.stats.t.ppf((1 + confidence) / 2., n_1 + n_2 - 1)
+        sem_weighted = math.sqrt((s_p_squared**2) / n_1 + (s_p_squared**2) / n_2)
+    else:
+        lambda_a = scipy.stats.norm.ppf((1 + confidence) / 2.)
+        sem_weighted = math.sqrt((stdd_1**2) / n_1 + (stdd_2**2) / n_2)
+    return diff_m - sem_weighted, diff_m + sem_weighted
