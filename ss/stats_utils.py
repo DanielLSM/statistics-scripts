@@ -82,3 +82,10 @@ def two_sample_population(m_1, stdd_1, n_1, m_2, stdd_2, n_2, confidence=0.95):
         lambda_a = scipy.stats.norm.ppf((1 + confidence) / 2.)
         sem_weighted = math.sqrt((stdd_1**2) / n_1 + (stdd_2**2) / n_2)
     return diff_m - sem_weighted, diff_m + sem_weighted
+
+
+def two_sample_population_from_data(data_1, data_2, confidence=0.95):
+    m_1, m_2 = mean(data_1), mean(data_2)
+    stdd_1, stdd_2 = stdev(data_1), stdev(data_2)
+    n_1, n_2 = len(data_1), len(data_2)
+    return two_sample_population(m_1, stdd_1, n_1, m_2, stdd_2, n_2, confidence=0.95)
