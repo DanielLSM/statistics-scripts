@@ -1,5 +1,6 @@
 import scipy
 import math
+import operator
 from scipy import stats
 from statistics import NormalDist, mean, stdev
 
@@ -92,3 +93,11 @@ def two_sample_population_from_data(data_1, data_2, confidence=0.95):
     stdd_1, stdd_2 = stdev(data_1), stdev(data_2)
     n_1, n_2 = len(data_1), len(data_2)
     return two_sample_population(m_1, stdd_1, n_1, m_2, stdd_2, n_2, confidence)
+
+
+def two_sample_dependant_from_data(data_1, data_2, confidence=0.95):
+    diff_list = list(map(operator.sub, data_1, data_2))
+    m_diff = mean(diff_list)
+    stdd_diff = stdev(diff_list)
+    n_diff = len(diff_list)
+    return confidence_interval(m_diff, stdd_diff, n_diff, confidence)
