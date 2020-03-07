@@ -9,6 +9,9 @@ data_2 = [72, 77, 84, 78, 69, 70, 77, 73, 65, 75]
 confidence = 0.95
 describe_stats(data_1)
 describe_stats(data_2)
-interval = two_sample_dependant_from_data(data_1, data_2, confidence)
+# interval = two_sample_dependant_from_data(data_1, data_2, confidence)
+# two_sample_population_from_data
+interval = two_sample_population_from_data(data_1, data_2, confidence)
+
 print("confidence interval is: [{:.2f} ; {:.2f}] with {:.2f}%".format(interval[0], interval[1],
                                                                       confidence * 100))

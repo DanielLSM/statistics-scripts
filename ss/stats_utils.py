@@ -101,3 +101,9 @@ def two_sample_dependant_from_data(data_1, data_2, confidence=0.95):
     stdd_diff = stdev(diff_list)
     n_diff = len(diff_list)
     return confidence_interval(m_diff, stdd_diff, n_diff, confidence)
+
+
+def two_sample_mannwhitneyu_test(data_x, data_y):
+    # Compute the Mann-Whitney rank test on samples x and y.
+    mwrt = stats.mannwhitneyu
+    return mwrt(data_x, data_y)
