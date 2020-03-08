@@ -67,7 +67,7 @@ def two_sample_proportion(p_1, n_1, p_2, n_2, confidence=0.95):
     diff_p = p_1 - p_2
     sem_weighted = math.sqrt(((p_1 * (1 - p_1)) / n_1 + ((p_2 * (1 - p_2)) / n_2)))
     lambda_a = scipy.stats.norm.ppf((1 + confidence) / 2.)
-    h = sem * lambda_a
+    h = sem_weighted * lambda_a
     print("lambda:{0:.2f}".format(lambda_a))
     print("weighted sem:{0:.2f}".format(sem_weighted))
     return -h, h
@@ -114,3 +114,8 @@ def frequency_hypothesis_chisquare(f_obs, f_exp, ddof=None):
     # categorical data has the given frequencies.
     chisquare = stats.chisquare
     return chisquare(f_obs=f_obs, f_exp=f_exp, ddof=5, axis=None)
+
+
+def linear_regression(x, y):
+
+    return stats.linregress(x, y)
