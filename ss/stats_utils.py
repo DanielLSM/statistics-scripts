@@ -107,3 +107,10 @@ def two_sample_mannwhitneyu_test(data_x, data_y):
     # Compute the Mann-Whitney rank test on samples x and y.
     mwrt = stats.mannwhitneyu
     return mwrt(data_x, data_y)
+
+
+def frequency_hypothesis_chisquare(f_obs, f_exp, ddof=None):
+    # The chi-square test tests the null hypothesis that the
+    # categorical data has the given frequencies.
+    chisquare = stats.chisquare
+    return chisquare(f_obs=f_obs, f_exp=f_exp, ddof=5, axis=None)
